@@ -35,12 +35,10 @@
    ln_cat_hfn       = .true.,         !  ice categories are defined by a function following rn_himean**(-0.05)
       rn_himean     =   2.0           !  expected domain-average ice thickness (m)
    rn_himin         =   0.1          !  minimum ice thickness (m) used in remapping
-!  rn_himin         =   1.0          !  minimum ice thickness (m) used in remapping
 /
 !------------------------------------------------------------------------------
 &namdyn         !   Ice dynamics
 !------------------------------------------------------------------------------
-!  ln_landfast_L16  = .false.,         !  landfast: parameterization from Lemieux 2016
    ln_dynALL        = .true.,         !  dyn.: full ice dynamics
 /
 !------------------------------------------------------------------------------
@@ -52,7 +50,6 @@
 !------------------------------------------------------------------------------
    ln_rhg_EVP       = .true.,         !  EVP rheology
       ln_aEVP       = .false.,        !     adaptive rheology (Kimmritz et al. 2016 & 2017) !!!ASM OPM021
-!     ln_aEVP       = .true.,        !     adaptive rheology (Kimmritz et al. 2016 & 2017)  !!!ASM OPM020
       nn_nevp       = 120             !     number of EVP subcycles
 /
 !------------------------------------------------------------------------------
@@ -66,7 +63,6 @@
 &namsbc         !   Ice surface boundary conditions
 !------------------------------------------------------------------------------
    rn_cio           =   5.0e-03       !  ice-ocean drag coefficient (-)   !!!ASM OPM021
-!  rn_cio           =  12.0e-03       !  ice-ocean drag coefficient (-)   !!!ASM OPM020
    nn_snwfra        =   2             !  calculate the fraction of ice covered by snow (for zdf and albedo)
                                       !     = 0  fraction = 1 (if snow) or 0 (if no snow)
                                       !     = 1  fraction = 1-exp(-0.2*rhos*hsnw) [MetO formulation]
@@ -93,8 +89,6 @@
 &namthd_do      !   Ice growth in open water
 !------------------------------------------------------------------------------
    rn_hinew         =   0.1           !  thickness for new ice formation in open water (m), must be larger than rn_himin
-!  rn_hinew         =   0.02          !  thickness for new ice formation in open water (m), must be larger than rn_himin
-!  ln_frazil        = .true.,         !  Frazil ice parameterization (ice collection as a function of wind)  !!!ASM OPM020
    ln_frazil        = .false.,         !  Frazil ice parameterization (ice collection as a function of wind) !!!ASM OPM021
 /
 !------------------------------------------------------------------------------
@@ -111,9 +105,7 @@
 &namini         !   Ice initialization
 !------------------------------------------------------------------------------
    ln_iceini        = .true.,         !  activate ice initialization (T) or not (F)
-!  ln_iceini        = .false.,         !  activate ice initialization (T) or not (F)
    nn_iceini_file   =   1             !     0 = Initialise sea ice based on SSTs
-!  nn_iceini_file   =   2             !     0 = Initialise sea ice based on SSTs
                                       !     1 = Initialise sea ice from single category netcdf file
                                       !     2 = Initialise sea ice from multi category restart file
    ! -- for ln_iceini_file = T
