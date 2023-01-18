@@ -21,9 +21,9 @@
 !------------------------------------------------------------------------------
 &nampar         !   Generic parameters
 !------------------------------------------------------------------------------
-!  jpl              =   5             !  number of ice  categories
-!  nlay_i           =   2             !  number of ice  layers
-!  nlay_s           =   1             !  number of snow layers (only 1 is working)
+!  jpl              =  10             !  number of ice  categories
+!  nlay_i           =   5             !  number of ice  layers
+   nlay_s           =   1             !  number of snow layers (only 1 is working)
 !  ln_virtual_itd   =   .false.,      !  virtual ITD mono-category parameterization (jpl=1 only)
 !                                     !     i.e. enhanced thermal conductivity & virtual thin ice melting
 !  ln_icedyn        = .true.,         !  ice dynamics (T) or not (F)
@@ -35,6 +35,7 @@
    ln_cat_hfn       = .true.,         !  ice categories are defined by a function following rn_himean**(-0.05)
       rn_himean     =   2.0           !  expected domain-average ice thickness (m)
    rn_himin         =   0.1          !  minimum ice thickness (m) used in remapping
+!  rn_himin         =   1.0          !  minimum ice thickness (m) used in remapping
 /
 !------------------------------------------------------------------------------
 &namdyn         !   Ice dynamics
@@ -52,6 +53,7 @@
    ln_rhg_EVP       = .true.,         !  EVP rheology
       ln_aEVP       = .false.,        !     adaptive rheology (Kimmritz et al. 2016 & 2017) !!!ASM OPM021
 !     ln_aEVP       = .true.,        !     adaptive rheology (Kimmritz et al. 2016 & 2017)  !!!ASM OPM020
+      nn_nevp       = 120             !     number of EVP subcycles
 /
 !------------------------------------------------------------------------------
 &namdyn_adv     !   Ice advection
@@ -80,6 +82,8 @@
 !------------------------------------------------------------------------------
 &namthd_zdf     !   Ice heat diffusion
 !------------------------------------------------------------------------------
+   rn_cnd_s         =   0.35          !  thermal conductivity of the snow (0.31 W/m/K, Maykut and Untersteiner, 1971)
+                                      !     Obs: 0.1-0.5 (Lecomte et al, JAMES 2013)
 /
 !------------------------------------------------------------------------------
 &namthd_da      !   Ice lateral melting
@@ -90,8 +94,8 @@
 !------------------------------------------------------------------------------
    rn_hinew         =   0.1           !  thickness for new ice formation in open water (m), must be larger than rn_himin
 !  rn_hinew         =   0.02          !  thickness for new ice formation in open water (m), must be larger than rn_himin
-   ln_frazil        = .true.,         !  Frazil ice parameterization (ice collection as a function of wind)  !!!ASM OPM020
-!  ln_frazil        = .false.,         !  Frazil ice parameterization (ice collection as a function of wind) !!!ASM OPM021
+!  ln_frazil        = .true.,         !  Frazil ice parameterization (ice collection as a function of wind)  !!!ASM OPM020
+   ln_frazil        = .false.,         !  Frazil ice parameterization (ice collection as a function of wind) !!!ASM OPM021
 /
 !------------------------------------------------------------------------------
 &namthd_sal     !   Ice salinity
@@ -100,20 +104,22 @@
 !------------------------------------------------------------------------------
 &namthd_pnd     !   Melt ponds
 !------------------------------------------------------------------------------
-   ln_pnd            = .false.,        !  activate melt ponds or not
-      ln_pnd_LEV     = .false.,        !  level ice melt ponds (from Flocco et al 2007,2010 & Holland et al 2012)
+   ln_pnd            = .true.,        !  activate melt ponds or not
+      ln_pnd_LEV     = .true.,        !  level ice melt ponds (from Flocco et al 2007,2010 & Holland et al 2012)
 /
 !------------------------------------------------------------------------------
 &namini         !   Ice initialization
 !------------------------------------------------------------------------------
    ln_iceini        = .true.,         !  activate ice initialization (T) or not (F)
+!  ln_iceini        = .false.,         !  activate ice initialization (T) or not (F)
    nn_iceini_file   =   1             !     0 = Initialise sea ice based on SSTs
+!  nn_iceini_file   =   2             !     0 = Initialise sea ice based on SSTs
                                       !     1 = Initialise sea ice from single category netcdf file
                                       !     2 = Initialise sea ice from multi category restart file
    ! -- for ln_iceini_file = T
-   sn_hti = 'istate_sea_ice_ROSS025.nc', -12. ,'sithic',  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_hts = 'istate_sea_ice_ROSS025.nc', -12. ,'snthic',  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_ati = 'istate_sea_ice_ROSS025.nc', -12. ,'siconc'  ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_hti = 'istate_sea_ice_ROSS025.nc', -1. ,'sithic',  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_hts = 'istate_sea_ice_ROSS025.nc', -1. ,'snthic',  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_ati = 'istate_sea_ice_ROSS025.nc', -1. ,'siconc'  ,  .false.  , .true., 'yearly'  , '' , '', ''
    sn_smi = 'NOT USED'              , -12. ,'smi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
    sn_tmi = 'NOT USED'              , -12. ,'tmi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
    sn_tsu = 'NOT USED'              , -12. ,'tsu'   ,  .false.  , .true., 'yearly'  , '' , '', ''
@@ -132,3 +138,4 @@
 &namdia         !   Diagnostics
 !------------------------------------------------------------------------------
 /
+
