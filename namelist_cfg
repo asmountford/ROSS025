@@ -36,25 +36,17 @@
    nn_no       =       0   !  job number (no more used...)
    cn_exp      =  'ROSS025' !  experience name
    nn_it000    =   1       !  first time step
-!  nn_itend    =  262800   !  last  time step (std 5475)
-!  nn_itend    =  131400   !  last  time step (std 5475)
    nn_itend    =  26280    !  last  time step (std 5475) 
-!  nn_itend    =  5475    !  last  time step (std 5475)
    nn_date0    = 19790101  !  date at nit_0000 (format yyyymmdd) used if ln_rstart=F or (ln_rstart=T and nn_rstctl=0 or 1)
-!  ln_rstart   = .true.,  !  start from rest (F) or from a restart file (T)
    ln_rstart   = .false.,  !  start from rest (F) or from a restart file (T)
       nn_rstctl   =    0      !  restart control ==> activated only if ln_rstart=T
    nn_istate   =   1
-!  ln_rst_list = .true.,  !  output restarts at list of times using nn_stocklist (T) or at set frequency with nn_stock (F)
-!  nn_stocklist = 26280,52560,78840,105120,131400,157680,183960,210240,236520,262800 ! List of timesteps when a restart file is to be written
-!  nn_stocklist = 26280,52560,78840,105120,131400,0,0,0,0,0 ! List of timesteps when a restart file is to be written
    nn_leapy    =       0   !  Leap year calendar (1) or not (0)
 /
 !-----------------------------------------------------------------------
 &namdom        !   time and space domain
 !-----------------------------------------------------------------------
    rn_Dt      = 1200.     !  time step for the dynamics and tracer
-!  rn_Dt      = 1350.     !  time step for the dynamics and tracer  !!! ASM from PM's namelist
    ln_meshmask = .true.,   !  =T create a mesh file
    ln_linssh   =  .false., !  =T  linear free surface  ==>>  model level are fixed in time
    ln_crs      = .false.,  !  Logical switch for coarsening module      (T => fill namcrs)
@@ -144,7 +136,6 @@
    ln_dm2dc    = .false.,  !  daily mean to diurnal cycle on short wave
    ln_ssr      = .true.,  !  Sea Surface Restoring on T and/or S       (T => fill namsbc_ssr)
    nn_fwb      = 1         !  FreshWater Budget: =0 unchecked
-!  nn_fwb      = 0         !  FreshWater Budget: =0 unchecked
       !                    !     =1 global mean of e-p-r set to zero at each time step
       !                    !     =2 annual global mean of e-p-r set to zero
    ln_rnf      = .true.,   !  runoffs                                   (T   => fill namsbc_rnf)
@@ -208,7 +199,6 @@
 &namsbc_ssr    !   surface boundary condition : sea surface restoring   (ln_ssr =T)
 !-----------------------------------------------------------------------
    nn_sssr     =     2     !  add a damping     term in the surface freshwater flux (=2)
-!  nn_sssr     =     0     !  add a damping     term in the surface freshwater flux (=2)
       !                    !  or to SSS only (=1) or no damping term (=0)
       rn_deds     =  -166.67  !  magnitude of the damping on salinity   [mm/day]
       ln_sssr_bnd =  .true.,  !  flag to bound erp term (associated with nn_sssr=2)
@@ -267,7 +257,6 @@
          rn_gammat0  = 1.4e-2    ! gammat coefficient used in spe, vel and vel_stab gamma computation method
          rn_gammas0  = 4.0e-4    ! gammas coefficient used in spe, vel and vel_stab gamma computation method
          !
-!        rn_htbl     =  20.      ! thickness of the top boundary layer    (Losch et al. 2008)
          rn_htbl     =  30.      ! thickness of the top boundary layer    (Losch et al. 2008)
          !                       ! 0 => thickness of the tbl = thickness of the first wet cell
          !
@@ -353,7 +342,6 @@
    ln_mask_file   = .false.,  !  =T : read mask from file
       cn_mask_file = ''       !  name of mask file (if ln_mask_file=.TRUE.)
    cn_dyn2d       = 'flather' !
-!  cn_dyn2d       = 'none' !
    nn_dyn2d_dta   =  1        !  = 0, bdy data are equal to the initial state
       !                       !  = 1, bdy data are read in 'bdydata   .nc' files
       !                       !  = 2, use tidal harmonic forcing data from files
@@ -369,7 +357,6 @@
    !                          !  = 1, bdy data are read in 'bdydata   .nc' files
    !
    nn_rimwidth   = 1          !  width of the relaxation zone
-!  ln_vol        = .true.,   !  total volume correction (see nn_volctl parameter)
    ln_vol        = .false.,   !  total volume correction (see nn_volctl parameter) !!!ASM must be false with tides
    nn_volctl     =  1         !  = 0, the total water flux across open boundaries is zero
 /
@@ -394,8 +381,6 @@
    bn_a_i      =    'bdyT_ice'           ,        120        , 'ileadfra' ,     .true. , .false., 'yearly'  ,    ''            ,   ''     ,     ''
    bn_h_i      =    'bdyT_ice'           ,        120        , 'iicethic' ,     .true. , .false., 'yearly'  ,    ''            ,   ''     ,     ''
    bn_h_s      =    'bdyT_ice'           ,        120        , 'isnowthi' ,     .true. , .false., 'yearly'  ,    ''            ,   ''     ,     ''
-
-!  rn_ice_sal  = 6.3          !       --   salinity                            --
 /
 !-----------------------------------------------------------------------
 &nambdy_tide   !  tidal forcing at open boundaries                      (default: OFF)
@@ -422,22 +407,17 @@
 !-----------------------------------------------------------------------
 &namdrg_top    !   TOP friction                                         (ln_drg_OFF =F & ln_isfcav=T)
 !-----------------------------------------------------------------------
-!  rn_Cd0      =  1.e-3    !  drag coefficient [-]
    rn_Cd0      =  2.5e-3    !  drag coefficient [-]
 /
 !-----------------------------------------------------------------------
 &namdrg_bot    !   BOTTOM friction                                      (ln_drg_OFF =F)
 !-----------------------------------------------------------------------
    rn_Cd0      =  1.e-3    !  drag coefficient [-]
-!  rn_Cd0      =  2.5e-3    !  drag coefficient [-]   !!!ASM why this value? 
-!  ln_boost    = .false.,   !  =T regional boost of Cd0 ; =F constant
-!     rn_boost =  50.         !  local boost factor  [-]
 /
 !-----------------------------------------------------------------------
 &nambbc        !   bottom temperature boundary condition                (default: OFF)
 !-----------------------------------------------------------------------
    ln_trabbc   = .true.,  !  Apply a geothermal heating at the ocean bottom
-!  ln_trabbc   = .false.,  !  Apply a geothermal heating at the ocean bottom
       nn_geoflx     = 2       !  geothermal heat flux: = 1 constant flux
       !                       !                        = 2 read variable flux [mW/m2]
       rn_geoflx_cst = 86.4e-3 !  Constant value of geothermal heat flux       [mW/m2]
@@ -509,7 +489,6 @@
 !-----------------------------------------------------------------------
 &namtra_eiv    !   eddy induced velocity param.                         (default: OFF)
 !-----------------------------------------------------------------------
-!  ln_ldfeiv   = .false.,    ! use eddy induced velocity parameterization
    ln_ldfeiv   = .true.,    ! use eddy induced velocity parameterization
       !
       !                        !  Coefficients:
@@ -525,7 +504,6 @@
       rn_Le        = 10.e+3         !  lateral diffusive length   [m]   (nn_aei_ijk_t= 0, 10)
       !
       ln_ldfeiv_dia = .false.,   ! diagnose eiv stream function and velocities
-!     nn_ldfeiv_shape = 2           !  shape of bounding coefficient    (nn_aei_ijk_t= 21 only)
 /
 !-----------------------------------------------------------------------
 &namtra_dmp    !   tracer: T & S newtonian damping                      (default: OFF)
@@ -629,15 +607,12 @@
       rn_hsbfr =    1.6       !  heat/salt buoyancy flux ratio
    !
    !                       ! coefficients
-!  rn_avm0     =   1.4e-6     !  vertical eddy viscosity   [m2/s]       (background Kz if ln_zdfcst=F)
    rn_avm0     =   1.2e-4     !  vertical eddy viscosity   [m2/s]       (background Kz if ln_zdfcst=F)
-!  rn_avt0     =   1.4e-7     !  vertical eddy diffusivity [m2/s]       (background Kz if ln_zdfcst=F)
    rn_avt0     =   2e-06      !  vertical eddy diffusivity [m2/s]       (background Kz if ln_zdfcst=F)
    nn_avb      =    0         !  profile for background avt & avm (=1) or not (=0)
    nn_havtb    =    1         !  horizontal shape for avtb (=1) or not (=0)
 
    ln_zdfiwm   = .false.,     ! internal wave-induced mixing            (T =>   fill namzdf_iwm)
-!  ln_zdfiwm   = .true.,     ! internal wave-induced mixing            (T =>   fill namzdf_iwm)
 /
 !-----------------------------------------------------------------------
 &namzdf_ric    !   richardson number dependent vertical diffusion       (ln_zdfric =T)
@@ -649,7 +624,6 @@
    nn_eice     =   3       !  below sea ice: =0 ON ; =4 OFF when ice fraction > 1/4
    rn_ediff    =   0.1     !  coef. for vertical eddy coef. (avt=rn_ediff*mxl*sqrt(e) )
                               !  ASM Kjellson 2015  !!!!! 0.3 
-!  rn_emin     =   1.e-10  !  minimum value of tke [m2/s2] (1.e-10 is because of iwm)  !!!ASM added 21/6/22
    rn_emin     =   1.e-6  !  minimum value of tke [m2/s2] (1.e-10 is because of iwm)  !!!ASM added 21/6/22
 /
 !-----------------------------------------------------------------------
