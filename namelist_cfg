@@ -48,7 +48,7 @@
 !-----------------------------------------------------------------------
    rn_Dt      = 1200.     !  time step for the dynamics and tracer
    ln_meshmask = .true.,   !  =T create a mesh file
-   ln_linssh   =  .false., !  =T  linear free surface  ==>>  model level are fixed in time
+   ln_linssh   = .false., !  =T  linear free surface  ==>>  model level are fixed in time
    ln_crs      = .false.,  !  Logical switch for coarsening module      (T => fill namcrs)
 /
 !-----------------------------------------------------------------------
@@ -135,7 +135,7 @@
    ln_traqsr   = .true.,   !  Light penetration in the ocean            (T => fill namtra_qsr)
    ln_dm2dc    = .false.,  !  daily mean to diurnal cycle on short wave
    ln_ssr      = .true.,  !  Sea Surface Restoring on T and/or S       (T => fill namsbc_ssr)
-   nn_fwb      = 1         !  FreshWater Budget: =0 unchecked
+   nn_fwb      = 0         !  FreshWater Budget: =0 unchecked
       !                    !     =1 global mean of e-p-r set to zero at each time step
       !                    !     =2 annual global mean of e-p-r set to zero
    ln_rnf      = .true.,   !  runoffs                                   (T   => fill namsbc_rnf)
@@ -288,8 +288,6 @@
       ! ---------------- ice sheet coupling -------------------------------
       !
       ln_isfcpl = .false.,
-         nn_drown       = 10        ! number of iteration of the extrapolation loop (fill the new wet cells)
-         ln_isfcpl_cons = .false.,
 /
 !-----------------------------------------------------------------------
 &namsbc_wave   ! External fields from wave model                        (ln_wave=T)
@@ -412,7 +410,7 @@
 !-----------------------------------------------------------------------
 &namdrg_bot    !   BOTTOM friction                                      (ln_drg_OFF =F)
 !-----------------------------------------------------------------------
-   rn_Cd0      =  1.e-3    !  drag coefficient [-]
+   rn_Cd0      =  2.5.e-3    !  drag coefficient [-]
 /
 !-----------------------------------------------------------------------
 &nambbc        !   bottom temperature boundary condition                (default: OFF)
