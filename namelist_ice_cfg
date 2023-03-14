@@ -21,13 +21,7 @@
 !------------------------------------------------------------------------------
 &nampar         !   Generic parameters
 !------------------------------------------------------------------------------
-!  jpl              =  10             !  number of ice  categories
-!  nlay_i           =   5             !  number of ice  layers
    nlay_s           =   1             !  number of snow layers (only 1 is working)
-!  ln_virtual_itd   =   .false.,      !  virtual ITD mono-category parameterization (jpl=1 only)
-!                                     !     i.e. enhanced thermal conductivity & virtual thin ice melting
-!  ln_icedyn        = .true.,         !  ice dynamics (T) or not (F)
-!  ln_icethd        = .true.,         !  ice thermo   (T) or not (F)
 /
 !------------------------------------------------------------------------------
 &namitd         !   Ice discretization
