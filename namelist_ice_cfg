@@ -28,7 +28,7 @@
 !------------------------------------------------------------------------------
    ln_cat_hfn       = .true.,         !  ice categories are defined by a function following rn_himean**(-0.05)
       rn_himean     =   2.0           !  expected domain-average ice thickness (m)
-   rn_himin         =   0.1          !  minimum ice thickness (m) used in remapping
+   rn_himin         =   0.01          !  minimum ice thickness (m) used in remapping
 /
 !------------------------------------------------------------------------------
 &namdyn         !   Ice dynamics
@@ -82,7 +82,7 @@
 !------------------------------------------------------------------------------
 &namthd_do      !   Ice growth in open water
 !------------------------------------------------------------------------------
-   rn_hinew         =   0.1           !  thickness for new ice formation in open water (m), must be larger than rn_himin
+   rn_hinew         =   0.02           !  thickness for new ice formation in open water (m), must be larger than rn_himin
    ln_frazil        = .false.,         !  Frazil ice parameterization (ice collection as a function of wind) !!!ASM OPM021
 /
 !------------------------------------------------------------------------------
