@@ -198,7 +198,7 @@
 !-----------------------------------------------------------------------
 &namsbc_ssr    !   surface boundary condition : sea surface restoring   (ln_ssr =T)
 !-----------------------------------------------------------------------
-   nn_sssr     =     2     !  add a damping     term in the surface freshwater flux (=2)
+   nn_sssr     =     0     !  add a damping     term in the surface freshwater flux (=2)
       !                    !  or to SSS only (=1) or no damping term (=0)
       rn_deds     =  -166.67  !  magnitude of the damping on salinity   [mm/day]
       ln_sssr_bnd =  .true.,  !  flag to bound erp term (associated with nn_sssr=2)
@@ -324,7 +324,7 @@
 &nam_tide      !   tide parameters                                      (default: OFF)
 !-----------------------------------------------------------------------
    ln_tide     = .true.,      ! Activate tides
-      ln_tide_pot   = .false.,              !  use tidal potential forcing
+      ln_tide_pot   = .true.,              !  use tidal potential forcing
       sn_tide_cnames(1) = 'M2'  !  name of constituent - all tidal components must be set in namelist_cfg
       sn_tide_cnames(2) = 'S2'
       sn_tide_cnames(3) = 'K1'
@@ -340,7 +340,7 @@
    ln_mask_file   = .false.,  !  =T : read mask from file
       cn_mask_file = ''       !  name of mask file (if ln_mask_file=.TRUE.)
    cn_dyn2d       = 'flather' !
-   nn_dyn2d_dta   =  1        !  = 0, bdy data are equal to the initial state
+   nn_dyn2d_dta   =  3        !  = 0, bdy data are equal to the initial state
       !                       !  = 1, bdy data are read in 'bdydata   .nc' files
       !                       !  = 2, use tidal harmonic forcing data from files
       !                       !  = 3, use external data AND tidal harmonic forcing
@@ -383,7 +383,7 @@
 !-----------------------------------------------------------------------
 &nambdy_tide   !  tidal forcing at open boundaries                      (default: OFF)
 !-----------------------------------------------------------------------
-   filtide          = '../EXP05/bdytide/ROSS025_bdytide_ '         !  file name root of tidal forcing files
+   filtide          = '../EXP05/bdytide/bdytide_ROSS025_ '         !  file name root of tidal forcing files
 !  filtide          = ' '         !  file name root of tidal forcing files
 /
 
